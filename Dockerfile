@@ -1,4 +1,4 @@
-FROM eclipse-temurin
+FROM nginx:latest
 LABEL Maintainer="Ramesh_Mamuduru"
 LABEL email="rameshmamuduru7799@gmail.com"
 WORKDIR /app
@@ -9,3 +9,4 @@ RUN apt-get update && \
 COPY target/*.war /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
