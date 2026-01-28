@@ -8,19 +8,40 @@
   <groupId>com.example</groupId>
   <artifactId>ecommerce-static</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>Simple E-Commerce Static Website</name>
 
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+
+  <dependencies>
+    <!-- Servlet API required for WAR -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>5.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
 
-      <!-- Jetty to serve static files -->
+      <!-- ✅ FIX: Modern WAR Plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+
+      <!-- Jetty for local testing -->
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>
@@ -28,9 +49,8 @@
         <configuration>
           <webApp>
             <contextPath>/</contextPath>
-            <resourceBase>${project.basedir}/src/main/resources/static</resourceBase>
+            <resourceBase>${project.basedir}/src/main/webapp</resourceBase>
           </webApp>
-          <scanIntervalSeconds>5</scanIntervalSeconds>
         </configuration>
       </plugin>
 
