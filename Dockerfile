@@ -1,12 +1,15 @@
-FROM nginx:latest
-LABEL Maintainer="Ramesh_Mamuduru"
-LABEL email="rameshmamuduru7799@gmail.com"
-WORKDIR /app
-RUN apt-get update && \
-    apt-get install curl -y && \
-    apt-get install nginx -y 
+FROM tomcat:9-jdk17
 
-COPY target/*.war /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+LABEL Maintainer="Ramesh_Mamuduru"
+
+LABEL email="rameshmamuduru7799@gmail.com"
+
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
+
 
